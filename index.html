@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title> Building a package</title>
+    <title> Building an R package</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Nicolas Casajus" />
-    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-    <link href="libs/font-awesome-5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="libs/font-awesome-5.15.3/css/v4-shims.min.css" rel="stylesheet" />
+    <meta name="author" content="   Nicolas Casajus - Aurélie Siberchicot" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/font-awesome-6.2.0/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.2.0/css/v4-shims.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/custom.css" type="text/css" />
   </head>
@@ -14,10 +14,18 @@
     <textarea id="source">
 class: right, middle, title-slide
 
-# <br />Building a package
+.title[
+# <br />Building an R package
+]
+.subtitle[
 ## <i>Become an R developer</i>
-### <br /><br /><br />Nicolas Casajus
-### .inst[December 2021]
+]
+.author[
+### <br /><br /><br />Nicolas Casajus - Aurélie Siberchicot
+]
+.date[
+### .inst[December 2022]
+]
 
 ---
 
@@ -28,7 +36,7 @@ class: right, middle, title-slide
 
 --
 
-<i class="fa fa-quote-left" role="presentation" aria-label="quote-left icon"></i> &amp;nbsp;
+<i class="fas fa-quote-left" role="presentation" aria-label="quote-left icon"></i> &amp;nbsp;
 In <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i>, the fundamental unit of shareable code is 
 the package. 
 A package bundles together `code`, `data`, `documentation`, and `tests`, 
@@ -47,19 +55,21 @@ An <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"><
 - makes your code `useful` for you and for others
 
 
----
-
-## What's an R Package?
-
-- As of today (2021-12-13), **18578** packages are 
-available on the [`CRAN`](https://cran.r-project.org)
-- And many more on `GitHub` and `Bioconductor`
-
 --
 
 &lt;br /&gt;
 
-- Must-read resources:
+
+As of today (2022-12-01):
+- **18902** packages are available on the [`CRAN`](https://cran.r-project.org)
+- **2183** packages on `Bioconductor`
+
+---
+
+## Must-read resources
+
+
+&lt;br /&gt;
 
 .center[
 [![:scale 27.8%](img/r-pkg.png)](https://r-pkgs.org/)
@@ -87,7 +97,9 @@ available on the [`CRAN`](https://cran.r-project.org)
 ![:scale 15.0%](img/hex-rmarkdown.png)
 ![:scale 15.0%](img/hex-testthat.png)
 ]
-
+.center[
+![:scale 25.0%](img/up-to-date.jpg)
+]
 
 ---
 
@@ -122,10 +134,12 @@ available on the [`CRAN`](https://cran.r-project.org)
 ![:scale 32%](img/new-3.png)
 ]
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Make sure to select &amp;nbsp;`Create R Package using devtools`
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Make sure to select &amp;nbsp;`Create R Package using devtools`
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;A **package name**
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;A **package name**
 can only contain `letters`, `numbers`, and the `.`
+
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Check that the chosen name is not already in use with `available::available()`
 
 --
 
@@ -181,15 +195,15 @@ usethis::create_package("/absolute/path/to/the/package/name")
 
 ## Writing an R function
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Let's create a first function `moyenne()`
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Let's create a first function `moyenne()`.
 
 
 --
 
 &lt;br /&gt;
 
-- First, we will create a new <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> file in the folder **R/**
+- First, we will create a new <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> file in the folder **R/**.
 
 
 ```r
@@ -201,14 +215,14 @@ usethis::use_r("moyenne")
 
 &lt;br /&gt;
 
-- Now we can implement our function `moyenne()`
+- Now we can implement our function `moyenne()`.
 
 
 ```r
 moyenne &lt;- function(x) sum(x) / length(x)
 ```
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: [`Tidyverse style guide`](https://style.tidyverse.org/)
 
 
@@ -252,8 +266,8 @@ Each `roxygen` header will always start with these two fields:
 
 --
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Keywords `@title` and `@description` can be omitted
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Keywords `@title` and `@description` can be omitted.
 
 
 ```r
@@ -268,8 +282,8 @@ Keywords `@title` and `@description` can be omitted
 
 ## Time to document
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-If your function has `parameters`, each one must be documented
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+If your function has `parameters`, each one must be documented.
 
 
 ```r
@@ -279,7 +293,7 @@ If your function has `parameters`, each one must be documented
 
 --
 
-For example with our function `moyenne()`
+In our function `moyenne()`:
 
 
 ```r
@@ -290,9 +304,9 @@ For example with our function `moyenne()`
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 If your function `returns` an <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> object, 
-use the keyword `@return`
+use the keyword `@return`.
 
 
 ```r
@@ -301,7 +315,7 @@ use the keyword `@return`
 
 --
 
-For example with our function `moyenne()`
+In our function `moyenne()`:
 
 
 ```r
@@ -322,8 +336,8 @@ If your function returns nothing, use the keyword `@return` as follow:
 
 ## Time to document
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Add a section `@examples` to show how to use your function
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Add a section `@examples` to show how to use your function:
 
 
 ```r
@@ -336,8 +350,7 @@ Add a section `@examples` to show how to use your function
 
 &lt;br /&gt;
 
-If you don't want your example to be executed use `\dontrun{}` 
-(**only** in case your example returns an error or in case of time consuming code)
+If you don't want your example to be executed, use `\dontrun{}` when your example returns an error or does something that is dangerous
 
 
 ```r
@@ -348,12 +361,15 @@ If you don't want your example to be executed use `\dontrun{}`
 #' }
 ```
 
---
+or `\donttest{}` when your example takes too long (for the CRAN standards).
 
-&lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-You can also add a reproducible example (stored in `data/`)
+```r
+#' @examples
+#' \donttest{
+#' moyenne(runif(10e7))
+#' }
+```
 
 
 
@@ -361,8 +377,8 @@ You can also add a reproducible example (stored in `data/`)
 
 ## Time to document
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Finally if you want your function to be used directly by user you need to add this tag
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Finally if you want your function to be used directly by user you need to add this tag.
 
 
 ```r
@@ -398,10 +414,14 @@ moyenne &lt;- function(x) sum(x) / length(x)
 
 ---
 
-## Generating the doc
+## Generating the documentation
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-It's time to generate the corresponding `.Rd` file from this `roxygen` header
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+It's time to generate the corresponding `.Rd` file from this `roxygen` header.
+
+
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+All `.Rd` files are stored in the `man` folder.
 
 
 ```r
@@ -413,11 +433,18 @@ devtools::document()
 ✓ Writing 'NAMESPACE'
 ```
 
+
 --
 
 &lt;br /&gt;
 
-In addition to the creation of `man/moyenne.Rd` file, the `NAMESPACE` has been updated
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+In addition to the creation of `man/moyenne.Rd` file, the `NAMESPACE` has been updated.
+
+
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+This file lists which functions need to be exported, i.e. directly
+usable when loading the package (this file also deals with external dependencies).
 
 
 ```r
@@ -425,9 +452,6 @@ In addition to the creation of `man/moyenne.Rd` file, the `NAMESPACE` has been u
 export(moyenne)
 ```
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-As we can see this file lists which functions need to be exported, i.e. directly
-usable when loading the package (this file also deals with external dependencies).
 
 
 ---
@@ -444,9 +468,9 @@ usable when loading the package (this file also deals with external dependencies
 ## Testing the function
 
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Before going any further we have to try our function. So we will load our package 
-(and **NOT** sourcing the function)
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Before going any further, we have to try our function. So we will load our package 
+(and **NOT** sourcing the function).
 
 
 ```r
@@ -457,7 +481,7 @@ devtools::load_all()
 
 &lt;br /&gt;
 
-Now we can use our function
+Now we can use our function:
 
 
 ```r
@@ -492,10 +516,10 @@ moyenne(c(1, 2, NA))
 ## Modifying the function
 
 
-Our function does not seem to work properly
+Our function does not seem to work properly.
 
-<i class="fa fa-hand-point-right dark" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-We need to change the code to deal with `NA` values.
+<i class="far fa-hand-point-right dark" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+We need to update the code to deal with `NA` values.
 
 --
 
@@ -542,7 +566,7 @@ decision to remove `NA`. Instead we are going to let user choose to delete the
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Let's add an additional parameter to our function: `na_rm` with a default value 
 (`FALSE`). If `x` contains `NA` values and `na_rm = FALSE`, then an error will 
 be returned. Otherwise (`na_rm = TRUE`) `NA` values will be removed and the 
@@ -569,7 +593,7 @@ moyenne &lt;- function(x, na_rm = FALSE) {
 
 ## Modifying the function
 
-Let's test the function again
+Let's test the function again.
 
 
 ```r
@@ -635,6 +659,12 @@ moyenne(x = c(1, 2, NA), na_rm = TRUE)
 moyenne &lt;- function(x, na_rm = FALSE) { ... }
 ```
 
+And update the corresponding `.Rd` file and the `NAMESPACE`.
+
+
+```r
+devtools::document()
+```
 
 ---
 
@@ -653,7 +683,7 @@ moyenne &lt;- function(x, na_rm = FALSE) { ... }
 ## Package metadata
 
 Before we go any further, we need to edit some information about our package 
-using the `DESCRIPTION` file
+using the `DESCRIPTION` file.
 
 
 ```r
@@ -678,11 +708,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 ```
 
---
+- what defines our package (name, title, description, version, authors)?
+- who can use our package and how (licence) ?
+- who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
 
-&lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: [`Documentation file`](https://r-pkgs.org/description.html)
 and [`Choose a license`](https://choosealicense.com)
 
@@ -727,15 +758,12 @@ Duration: 11.6s
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-**One note:** Let's talk about package dependencies!
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+**1 note**: Let's talk about package dependencies!
 
 ---
 
 ## Package dependencies
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Previously we had the following note:
 
 ```
 &gt; checking R code for possible problems ... NOTE
@@ -747,45 +775,35 @@ Previously we had the following note:
   to your NAMESPACE file.
 ```
 
---
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-So we need to import the function `na.omit()` from the package `{stats}`
-
---
-
 &lt;br /&gt;
 
-There is three ways:
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+So we need to import the function `na.omit()` from the package `{stats}`.
 
+
+In `roxygen` header, import:
+
+- the whole package, with the tag `@import`:
 
 ```r
-## Import the whole package - In roxygen header
-@import stats
-
-## Import only a specific function from a package - In roxygen header
-@importFrom stats na.omit
-
-## Call the function as follow - In R code
-stats::na.omit()
+#' @import stats
 ```
 
----
+- or only a specific function from a package, with the tag `@importFrom`:
 
-## Package dependencies
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Prefer calling external function as `package::function()` for clarity&lt;br /&gt;
-For instance: `stats::na.omit()`
+```r
+#' @importFrom stats na.omit
+```
 
 
 ---
 
 ## Package dependencies
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Prefer calling external function as `package::function()` for clarity&lt;br /&gt;
-For instance: `stats::na.omit()`
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+In your R code, call external functions with `::` for clarity and efficiency.&lt;br /&gt;
+
+Here `stats::na.omit()`
 
 
 ```r
@@ -805,78 +823,8 @@ moyenne &lt;- function(x, na_rm = FALSE) {
 
 ## Package dependencies
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Prefer calling external function as `package::function()` for clarity&lt;br /&gt;
-For instance: `stats::na.omit()`
-
-
-&lt;br /&gt;
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-
----
-
-## Package dependencies
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Prefer calling external function as `package::function()` for clarity&lt;br /&gt;
-For instance: `stats::na.omit()`
-
-
-&lt;br /&gt;
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-
-```r
-#' Compute the arithmetic mean
-#'
-#' This function computes the arithmetic mean of a numeric variable.
-#'
-#' @param x a numeric vector (can contain `NA` values).
-#' @param na_rm a logical value indicating whether `NA` values should be
-#' stripped before the computation proceeds. Default is `FALSE`.
-#'
-#' @return A `numeric` representing the arithmetic mean of `x`.
-#'
-#' @export
-#' 
-#' @importFrom stats na.omit
-#'
-#' @examples
-#' [...]
-
-moyenne &lt;- function(x, na_rm = FALSE) { ... }
-```
-
-
----
-
-## Package dependencies
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Prefer calling external function as `package::function()` for clarity&lt;br /&gt;
-For instance: `stats::na.omit()`
-
-
-&lt;br /&gt;
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-&lt;br /&gt;
-
-**Do not forget** to update the `NAMESPACE` with `devtools::document()`
-
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+**Do not forget** to update the `NAMESPACE` (and the `.Rd` files) with `devtools::document()`.
 
 ```
 export(moyenne)
@@ -885,29 +833,24 @@ importFrom(stats,na.omit)
 
 --
 
-&lt;br /&gt;
-
-**NB.** The `NAMESPACE` controls what happens when our package is loaded but 
-not when it's installed. This is the role of `DESCRIPTION` and we need to add 
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+The `NAMESPACE` controls what happens when our package is loaded but 
+not when it's installed. This is the role of the `DESCRIPTION` file and we need to add 
 dependencies to this file.
-
 
 ---
 
 ## Package dependencies
 
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Let's add the dependency `stats` in the `DESCRIPTION` file.
-
-
 
 
 ```r
 usethis::use_package("stats", type = "Imports")
 ```
 
---
-
-&lt;br/&gt;
+&lt;br /&gt;
 
 ```
 Package: mypkg
@@ -936,25 +879,25 @@ Imports:
 
 - `Depends`: packages listed in this field are `installed` when your package is 
 installed and are `attached` when your package is attached. 
-**NEVER** use `Depends` and always use `Imports` (except for special cases)
+**NEVER** use `Depends` and always use `Imports` (except for special cases).
 
 --
 
 - `Imports`: packages listed in this field are `installed` when your package is 
 installed but are `not attached` when your package is attached (there are just loaded). 
-**ALWAYS** use this method
+**ALWAYS** use this method.
 
 --
 
 - `Suggests`: packages listed in this field are `not installed` when your 
 package is installed. Your package can use these packages, but doesn't require 
-them (e.g. to run tests, build vignettes, etc.)
+them (e.g. to run tests, build vignettes, etc.).
 
 --
 
 &lt;br/&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: Wickham - R Package
 [**Chap 8.1**](https://r-pkgs.org/description.html#dependencies) and 
 [**Chap 13.6**](https://r-pkgs.org/namespace.html#imports)
@@ -963,8 +906,6 @@ Resources: Wickham - R Package
 ---
 
 ## Check package
-
-
 
 &lt;br /&gt;
 
@@ -1013,8 +954,8 @@ devtools::install()
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Now we can use our package
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+Now we can use our package.
 
 
 ```r
@@ -1048,7 +989,7 @@ class: inverse, center, middle
 - Problem: it's time consuming, repetitive and it can break the code
 
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Package `{testthat}`
 
 .pull-leftt[
@@ -1070,7 +1011,7 @@ usethis::use_testthat()
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: 
 [**R Package Chap 12**](https://r-pkgs.org/tests.html)
 
@@ -1098,7 +1039,7 @@ usethis::use_vignette("mypkg")
 
 &lt;br /&gt;
 
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: 
 [**R Package Chap 11**](https://r-pkgs.org/vignettes.html)
 
@@ -1117,18 +1058,14 @@ Resources:
 - Add a **NEWS** file - `usethis::use_news_md()`
 
 &lt;br /&gt;
-
-- Submit to CRAN - `devtools::submit_cran()`
-
-&lt;br /&gt;
-
-The ultimate resource: [**https://r-pkgs.org**](https://r-pkgs.org)
-
---
+- Submit to CRAN
+  - `R CMD check pkg --as-cran`
+  - R-devel
+  - au moins deux OS
+  - blank report : `0 errors | 0 warnings | 0 notes`
 
 &lt;br /&gt;
-
-<i class="fa fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Try the [`rcompendium`](https://cran.r-project.org/package=rcompendium) package
+The ultimate resources: [**https://r-pkgs.org**](https://r-pkgs.org) and  [**Writing R Extensions**](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
@@ -1180,6 +1117,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

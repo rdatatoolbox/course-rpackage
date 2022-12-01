@@ -1,8 +1,8 @@
 ---
-title: "<br />Building a package"
+title: "<br />Building an R package"
 subtitle: "<i>Become an R developer</i>"
-date: .inst[December 2021]
-author: <br /><br /><br />Nicolas Casajus
+date: .inst[December 2022]
+author: <br /><br /><br />Nicolas Casajus - Aurélie Siberchicot
 output:
   xaringan::moon_reader:
     css: ["css/xaringan-themer.css", "css/custom.css"]
@@ -33,7 +33,12 @@ A package bundles together `code`, `data`, `documentation`, and `tests`,
 and is easy to share.
 
 .right[&mdash;&nbsp;&nbsp;**_Hadley Wickham_**]
-
+```{r include=FALSE}
+r = getOption("repos")
+r["CRAN"] = "http://cran.us.r-project.org"
+options(repos = r)
+library(magrittr)
+```
 --
 
 <br />
@@ -45,19 +50,21 @@ An `r fontawesome::fa_i("r-project")` package:
 - makes your code `useful` for you and for others
 
 
----
-
-## What's an R Package?
-
-- As of today (`r Sys.Date()`), **`r nrow(available.packages())`** packages are 
-available on the [`CRAN`](https://cran.r-project.org)
-- And many more on `GitHub` and `Bioconductor`
-
 --
 
 <br />
 
-- Must-read resources:
+
+As of today (`r Sys.Date()`):
+- **`r nrow(available.packages())`** packages are available on the [`CRAN`](https://cran.r-project.org)
+- **`r 'https://www.bioconductor.org/packages/release/bioc/' %>% rvest::read_html() %>% rvest::html_table() %>%.[[1]] %>% nrow()`** packages on `Bioconductor`
+
+---
+
+## Must-read resources
+
+
+<br />
 
 .center[
 [![:scale 27.8%](img/r-pkg.png)](https://r-pkgs.org/)
@@ -85,7 +92,9 @@ available on the [`CRAN`](https://cran.r-project.org)
 ![:scale 15.0%](img/hex-rmarkdown.png)
 ![:scale 15.0%](img/hex-testthat.png)
 ]
-
+.center[
+![:scale 25.0%](img/up-to-date.jpg)
+]
 
 ---
 
@@ -124,6 +133,8 @@ available on the [`CRAN`](https://cran.r-project.org)
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;A **package name**
 can only contain `letters`, `numbers`, and the `.`
+
+`r fontawesome::fa_i("hand-point-right")` &nbsp;Check that the chosen name is not already in use with `available::available()`
 
 --
 
@@ -179,14 +190,14 @@ usethis::create_package("/absolute/path/to/the/package/name")
 ## Writing an R function
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Let's create a first function `moyenne()`
+Let's create a first function `moyenne()`.
 
 
 --
 
 <br />
 
-- First, we will create a new `r fontawesome::fa_i("r-project")` file in the folder **R/**
+- First, we will create a new `r fontawesome::fa_i("r-project")` file in the folder **R/**.
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_r("moyenne")
@@ -197,7 +208,7 @@ usethis::use_r("moyenne")
 
 <br />
 
-- Now we can implement our function `moyenne()`
+- Now we can implement our function `moyenne()`.
 
 ```{r, echo = TRUE, eval = FALSE}
 moyenne <- function(x) sum(x) / length(x)
@@ -247,7 +258,7 @@ Each `roxygen` header will always start with these two fields:
 --
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Keywords `@title` and `@description` can be omitted
+Keywords `@title` and `@description` can be omitted.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' Short title of the function (one line)
@@ -262,7 +273,7 @@ Keywords `@title` and `@description` can be omitted
 ## Time to document
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-If your function has `parameters`, each one must be documented
+If your function has `parameters`, each one must be documented.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @param param_1 description
@@ -271,7 +282,7 @@ If your function has `parameters`, each one must be documented
 
 --
 
-For example with our function `moyenne()`
+In our function `moyenne()`:
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @param x a numeric vector
@@ -283,7 +294,7 @@ For example with our function `moyenne()`
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 If your function `returns` an `r fontawesome::fa_i("r-project")` object, 
-use the keyword `@return`
+use the keyword `@return`.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @return What the function returns.
@@ -291,7 +302,7 @@ use the keyword `@return`
 
 --
 
-For example with our function `moyenne()`
+In our function `moyenne()`:
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @return A `numeric` representing the arithmetic mean of `x`.
@@ -311,7 +322,7 @@ If your function returns nothing, use the keyword `@return` as follow:
 ## Time to document
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Add a section `@examples` to show how to use your function
+Add a section `@examples` to show how to use your function:
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @examples
@@ -323,8 +334,7 @@ Add a section `@examples` to show how to use your function
 
 <br />
 
-If you don't want your example to be executed use `\dontrun{}` 
-(**only** in case your example returns an error or in case of time consuming code)
+If you don't want your example to be executed, use `\dontrun{}` when your example returns an error or does something that is dangerous
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @examples
@@ -334,12 +344,14 @@ If you don't want your example to be executed use `\dontrun{}`
 #' }
 ```
 
---
+or `\donttest{}` when your example takes too long (for the CRAN standards).
 
-<br />
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-You can also add a reproducible example (stored in `data/`)
+```{r, echo = TRUE, eval = FALSE}
+#' @examples
+#' \donttest{
+#' moyenne(runif(10e7))
+#' }
+```
 
 
 
@@ -348,7 +360,7 @@ You can also add a reproducible example (stored in `data/`)
 ## Time to document
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Finally if you want your function to be used directly by user you need to add this tag
+Finally if you want your function to be used directly by user you need to add this tag.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @export
@@ -382,10 +394,14 @@ moyenne <- function(x) sum(x) / length(x)
 
 ---
 
-## Generating the doc
+## Generating the documentation
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-It's time to generate the corresponding `.Rd` file from this `roxygen` header
+It's time to generate the corresponding `.Rd` file from this `roxygen` header.
+
+
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
+All `.Rd` files are stored in the `man` folder.
 
 ```{r echo = TRUE, eval = FALSE}
 devtools::document()
@@ -396,20 +412,24 @@ devtools::document()
 ✓ Writing 'NAMESPACE'
 ```
 
+
 --
 
 <br />
 
-In addition to the creation of `man/moyenne.Rd` file, the `NAMESPACE` has been updated
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
+In addition to the creation of `man/moyenne.Rd` file, the `NAMESPACE` has been updated.
+
+
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
+This file lists which functions need to be exported, i.e. directly
+usable when loading the package (this file also deals with external dependencies).
 
 ```{r, eval = FALSE}
 # Generated by roxygen2: do not edit by hand
 export(moyenne)
 ```
 
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-As we can see this file lists which functions need to be exported, i.e. directly
-usable when loading the package (this file also deals with external dependencies).
 
 
 ---
@@ -427,8 +447,8 @@ usable when loading the package (this file also deals with external dependencies
 
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Before going any further we have to try our function. So we will load our package 
-(and **NOT** sourcing the function)
+Before going any further, we have to try our function. So we will load our package 
+(and **NOT** sourcing the function).
 
 ```{r, echo = TRUE, eval = FALSE}
 devtools::load_all()
@@ -438,7 +458,7 @@ devtools::load_all()
 
 <br />
 
-Now we can use our function
+Now we can use our function:
 
 ```{r, echo = TRUE, eval = FALSE}
 moyenne(c(1, 2))
@@ -471,10 +491,10 @@ moyenne(c(1, 2, NA))
 ## Modifying the function
 
 
-Our function does not seem to work properly
+Our function does not seem to work properly.
 
 `r fontawesome::fa_i("hand-point-right", class = "dark")` &nbsp;
-We need to change the code to deal with `NA` values.
+We need to update the code to deal with `NA` values.
 
 --
 
@@ -545,7 +565,7 @@ moyenne <- function(x, na_rm = FALSE) {
 
 ## Modifying the function
 
-Let's test the function again
+Let's test the function again.
 
 ```{r, echo = TRUE, eval = FALSE}
 ## Reload the function ----
@@ -609,6 +629,11 @@ moyenne(x = c(1, 2, NA), na_rm = TRUE)
 moyenne <- function(x, na_rm = FALSE) { ... }
 ```
 
+And update the corresponding `.Rd` file and the `NAMESPACE`.
+
+```{r echo = TRUE, eval = FALSE}
+devtools::document()
+```
 
 ---
 
@@ -627,7 +652,7 @@ moyenne <- function(x, na_rm = FALSE) { ... }
 ## Package metadata
 
 Before we go any further, we need to edit some information about our package 
-using the `DESCRIPTION` file
+using the `DESCRIPTION` file.
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::edit_file("DESCRIPTION")
@@ -651,9 +676,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 ```
 
---
+- what defines our package (name, title, description, version, authors)?
+- who can use our package and how (licence) ?
+- who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
 
-<br />
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Resources: [`Documentation file`](https://r-pkgs.org/description.html)
@@ -700,14 +726,11 @@ Duration: 11.6s
 <br />
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-**One note:** Let's talk about package dependencies!
+**1 note**: Let's talk about package dependencies!
 
 ---
 
 ## Package dependencies
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Previously we had the following note:
 
 ```
 > checking R code for possible problems ... NOTE
@@ -719,35 +742,23 @@ Previously we had the following note:
   to your NAMESPACE file.
 ```
 
---
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-So we need to import the function `na.omit()` from the package `{stats}`
-
---
-
 <br />
 
-There is three ways:
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
+So we need to import the function `na.omit()` from the package `{stats}`.
 
+
+In `roxygen` header, import:
+
+- the whole package, with the tag `@import`:
 ```{r, echo = TRUE, eval = FALSE}
-## Import the whole package - In roxygen header
-@import stats
-
-## Import only a specific function from a package - In roxygen header
-@importFrom stats na.omit
-
-## Call the function as follow - In R code
-stats::na.omit()
+#' @import stats
 ```
 
----
-
-## Package dependencies
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Prefer calling external function as `package::function()` for clarity<br />
-For instance: `stats::na.omit()`
+- or only a specific function from a package, with the tag `@importFrom`:
+```{r, echo = TRUE, eval = FALSE}
+#' @importFrom stats na.omit
+```
 
 
 ---
@@ -755,8 +766,9 @@ For instance: `stats::na.omit()`
 ## Package dependencies
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Prefer calling external function as `package::function()` for clarity<br />
-For instance: `stats::na.omit()`
+In your R code, call external functions with `::` for clarity and efficiency.<br />
+
+Here `stats::na.omit()`
 
 ```{r, echo = TRUE, eval = FALSE}
 moyenne <- function(x, na_rm = FALSE) {
@@ -776,76 +788,7 @@ moyenne <- function(x, na_rm = FALSE) {
 ## Package dependencies
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Prefer calling external function as `package::function()` for clarity<br />
-For instance: `stats::na.omit()`
-
-
-<br />
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-
----
-
-## Package dependencies
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Prefer calling external function as `package::function()` for clarity<br />
-For instance: `stats::na.omit()`
-
-
-<br />
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-```{r, echo = TRUE, eval = FALSE}
-#' Compute the arithmetic mean
-#'
-#' This function computes the arithmetic mean of a numeric variable.
-#'
-#' @param x a numeric vector (can contain `NA` values).
-#' @param na_rm a logical value indicating whether `NA` values should be
-#' stripped before the computation proceeds. Default is `FALSE`.
-#'
-#' @return A `numeric` representing the arithmetic mean of `x`.
-#'
-#' @export
-#' 
-#' @importFrom stats na.omit
-#'
-#' @examples
-#' [...]
-
-moyenne <- function(x, na_rm = FALSE) { ... }
-```
-
-
----
-
-## Package dependencies
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Prefer calling external function as `package::function()` for clarity<br />
-For instance: `stats::na.omit()`
-
-
-<br />
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;
-Use `roxygen` tag `@importFrom` (or `@import`) if you need to call functions many times
-(i.e. `ggplot2`)
-
-
-<br />
-
-**Do not forget** to update the `NAMESPACE` with `devtools::document()`
-
+**Do not forget** to update the `NAMESPACE` (and the `.Rd` files) with `devtools::document()`.
 
 ```
 export(moyenne)
@@ -854,28 +797,23 @@ importFrom(stats,na.omit)
 
 --
 
-<br />
-
-**NB.** The `NAMESPACE` controls what happens when our package is loaded but 
-not when it's installed. This is the role of `DESCRIPTION` and we need to add 
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
+The `NAMESPACE` controls what happens when our package is loaded but 
+not when it's installed. This is the role of the `DESCRIPTION` file and we need to add 
 dependencies to this file.
-
 
 ---
 
 ## Package dependencies
 
+`r fontawesome::fa_i("hand-point-right")` &nbsp;
 Let's add the dependency `stats` in the `DESCRIPTION` file.
-
-
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_package("stats", type = "Imports")
 ```
 
---
-
-<br/>
+<br />
 
 ```
 Package: mypkg
@@ -904,19 +842,19 @@ Imports:
 
 - `Depends`: packages listed in this field are `installed` when your package is 
 installed and are `attached` when your package is attached. 
-**NEVER** use `Depends` and always use `Imports` (except for special cases)
+**NEVER** use `Depends` and always use `Imports` (except for special cases).
 
 --
 
 - `Imports`: packages listed in this field are `installed` when your package is 
 installed but are `not attached` when your package is attached (there are just loaded). 
-**ALWAYS** use this method
+**ALWAYS** use this method.
 
 --
 
 - `Suggests`: packages listed in this field are `not installed` when your 
 package is installed. Your package can use these packages, but doesn't require 
-them (e.g. to run tests, build vignettes, etc.)
+them (e.g. to run tests, build vignettes, etc.).
 
 --
 
@@ -931,8 +869,6 @@ Resources: Wickham - R Package
 ---
 
 ## Check package
-
-
 
 <br />
 
@@ -980,7 +916,7 @@ devtools::install()
 <br />
 
 `r fontawesome::fa_i("hand-point-right", )` &nbsp;
-Now we can use our package
+Now we can use our package.
 
 ```{r, echo = TRUE, eval = FALSE}
 ## Load and attach the package ----
@@ -1079,16 +1015,12 @@ Resources:
 - Add a **NEWS** file - `usethis::use_news_md()`
 
 <br />
-
-- Submit to CRAN - `devtools::submit_cran()`
-
-<br />
-
-The ultimate resource: [**https://r-pkgs.org**](https://r-pkgs.org)
-
---
+- Submit to CRAN
+  - `R CMD check pkg --as-cran`
+  - R-devel
+  - au moins deux OS
+  - blank report : `0 errors | 0 warnings | 0 notes`
 
 <br />
-
-`r fontawesome::fa_i("hand-point-right")` &nbsp;Try the [`rcompendium`](https://cran.r-project.org/package=rcompendium) package
+The ultimate resources: [**https://r-pkgs.org**](https://r-pkgs.org) and  [**Writing R Extensions**](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
 
