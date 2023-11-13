@@ -1,8 +1,8 @@
 ---
 title: "<br />Building an R package"
 subtitle: "<i>Become an R developer</i>"
-date: .inst[December 2022]
-author: <br /><br /><br />Nicolas Casajus - Aurélie Siberchicot
+date: .inst[November 2023]
+author: <br /><br /><br />Nicolas Casajus & Aurélie Siberchicot
 output:
   xaringan::moon_reader:
     css: ["css/xaringan-themer.css", "css/custom.css"]
@@ -92,9 +92,7 @@ As of today (`r Sys.Date()`):
 ![:scale 15.0%](img/hex-rmarkdown.png)
 ![:scale 15.0%](img/hex-testthat.png)
 ]
-.center[
-![:scale 25.0%](img/up-to-date.jpg)
-]
+
 
 ---
 
