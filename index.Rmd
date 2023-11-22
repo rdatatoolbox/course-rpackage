@@ -30,7 +30,7 @@ output:
 In `r fontawesome::fa_i("r-project")`, the fundamental unit of shareable code is 
 the package. 
 A package bundles together `code`, `data`, `documentation`, and `tests`, 
-and is easy to share.
+and is easy to share with others.
 
 .right[&mdash;&nbsp;&nbsp;**_Hadley Wickham_**]
 ```{r include=FALSE}
@@ -67,11 +67,9 @@ As of today (`r Sys.Date()`):
 <br />
 
 .center[
-[![:scale 27.8%](img/r-pkg.png)](https://r-pkgs.org/)
+[![:scale 36%](img/r-pkg.jpg)](https://r-pkgs.org/)
 &nbsp;
-[![:scale 27.4%](img/r-ext.jpg)](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
-&nbsp;
-[![:scale 25.0%](img/chambers.jpg)](https://www.taylorfrancis.com/books/9781315381305)
+[![:scale 34%](img/r-ext.png)](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
 ]
 
 
@@ -82,17 +80,19 @@ As of today (`r Sys.Date()`):
 <br />
 
 .center[
-![:scale 45.0%](img/rstudio.png)
+![:scale 40%](img/rstudio.png)
 ]
 
 .center[
-![:scale 15.0%](img/hex-devtools.png)
-![:scale 15.0%](img/hex-usethis.png)
-![:scale 15.0%](img/hex-roxygen2.png)
-![:scale 15.0%](img/hex-rmarkdown.png)
-![:scale 15.0%](img/hex-testthat.png)
+![:scale 13.0%](img/hex-devtools.png)
+![:scale 13.0%](img/hex-usethis.png)
+![:scale 13.0%](img/hex-roxygen2.png)
+![:scale 13.0%](img/hex-rmarkdown.png)
+![:scale 13.0%](img/hex-testthat.png)
 ]
-
+.center[
+![:scale 28.0%](img/up-to-date.png)
+]
 
 ---
 
@@ -271,7 +271,7 @@ Keywords `@title` and `@description` can be omitted.
 ## Time to document
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-If your function has `parameters`, each one must be documented.
+If your function has `input parameters`, each one must be documented.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @param param_1 description
@@ -369,7 +369,7 @@ Finally if you want your function to be used directly by user you need to add th
 
 ## Time to document
 
-Back to our function
+Back to the R file of our function
 
 ```{r, echo = TRUE, eval = FALSE}
 #' Compute the arithmetic mean
@@ -529,7 +529,7 @@ moyenne(c(1, 2, NA))
 
 That's better, but...
 
-If user has `NA` values, this implementation will not inform him and will make the 
+If user has `NA` values, this implementation will not inform him/her and will make the 
 decision to remove `NA`. Instead we are going to let user choose to delete the 
 `NA` or not.
 
@@ -540,7 +540,7 @@ decision to remove `NA`. Instead we are going to let user choose to delete the
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Let's add an additional parameter to our function: `na_rm` with a default value 
 (`FALSE`). If `x` contains `NA` values and `na_rm = FALSE`, then an error will 
-be returned. Otherwise (`na_rm = TRUE`) `NA` values will be removed and the 
+be returned. If `na_rm = TRUE`, `NA` values will be removed and the 
 computation can be done.
 
 --
@@ -649,8 +649,13 @@ devtools::document()
 
 ## Package metadata
 
-Before we go any further, we need to edit some information about our package 
-using the `DESCRIPTION` file.
+Before we go any further, we need to edit some information about our package, 
+using the `DESCRIPTION` file:
+
+- what defines our package (name, title, description, version, authors)?
+- who can use our package and how (licence)?
+- who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
+
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::edit_file("DESCRIPTION")
@@ -674,13 +679,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 ```
 
-- what defines our package (name, title, description, version, authors)?
-- who can use our package and how (licence) ?
-- who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
-
-
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Resources: [`Documentation file`](https://r-pkgs.org/description.html)
+Resources: [`DESCRIPTION file`](https://r-pkgs.org/description.html)
 and [`Choose a license`](https://choosealicense.com)
 
 
@@ -748,12 +748,12 @@ So we need to import the function `na.omit()` from the package `{stats}`.
 
 In `roxygen` header, import:
 
-- the whole package, with the tag `@import`:
+- either the whole package, with the tag `@import`:
 ```{r, echo = TRUE, eval = FALSE}
 #' @import stats
 ```
 
-- or only a specific function from a package, with the tag `@importFrom`:
+- or only specific functions from a package, with the tag `@importFrom`:
 ```{r, echo = TRUE, eval = FALSE}
 #' @importFrom stats na.omit
 ```
@@ -859,9 +859,10 @@ them (e.g. to run tests, build vignettes, etc.).
 <br/>
 
 `r fontawesome::fa_i("hand-point-right", )` &nbsp;
-Resources: Wickham - R Package
-[**Chap 8.1**](https://r-pkgs.org/description.html#dependencies) and 
-[**Chap 13.6**](https://r-pkgs.org/namespace.html#imports)
+Resources: Wickham & Bryan - R Packages
+[**Chap 9**](https://r-pkgs.org/description.html), 
+[**Chap 10**](https://r-pkgs.org/dependencies-mindset-background.html) and
+[**Chap 11**](https://r-pkgs.org/dependencies-in-practice.html)
 
 
 ---
@@ -969,7 +970,7 @@ usethis::use_testthat()
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Resources: 
-[**R Package Chap 12**](https://r-pkgs.org/tests.html)
+[**R Packages Chap 13**](https://r-pkgs.org/testing-basics.html)
 
 
 ---
@@ -996,7 +997,7 @@ usethis::use_vignette("mypkg")
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Resources: 
-[**R Package Chap 11**](https://r-pkgs.org/vignettes.html)
+[**R Package Chap 17**](https://r-pkgs.org/vignettes.html)
 
 
 ---
@@ -1015,9 +1016,9 @@ Resources:
 <br />
 - Submit to CRAN
   - `R CMD check pkg --as-cran`
-  - R-devel
-  - au moins deux OS
-  - blank report : `0 errors | 0 warnings | 0 notes`
+  - on the current version of R-devel
+  - on at least two OS
+  - blank report: `0 errors | 0 warnings | 0 notes`
 
 <br />
 The ultimate resources: [**https://r-pkgs.org**](https://r-pkgs.org) and  [**Writing R Extensions**](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
