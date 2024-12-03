@@ -2,8 +2,11 @@
 a:hover,a:focus{text-decoration:underline;}
 .title-slide{background-image:url("../img/background-rdatatoolbox_4-3.png");background-position:center;background-size:cover;}
 .pull-leftt{float:left;width:27%;}
+.pull-lefttt{float:left;width:67%;}
 .pull-rightt{float:right;width:67%;}
+.pull-righttt{float:right;width:27%;}
 .pull-rightt ~ *{clear:both;}
+.pull-righttt ~ *{clear:both;}
 .small{font-size:0.635em;}
 .ssmall{font-size:0.635em;}
 .verysmall{font-size:0.675em;}

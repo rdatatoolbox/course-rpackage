@@ -4,9 +4,9 @@
     <title> Building an R package</title>
     <meta charset="utf-8" />
     <meta name="author" content="   Nicolas Casajus &amp; Aurélie Siberchicot" />
-    <script src="libs/header-attrs-2.25/header-attrs.js"></script>
-    <link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-    <link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="css/custom.css" type="text/css" />
   </head>
@@ -24,7 +24,7 @@ class: right, middle, title-slide
 ### <br /><br /><br />Nicolas Casajus &amp; Aurélie Siberchicot
 ]
 .date[
-### .inst[November 2023]
+### .inst[December 2024]
 ]
 
 ---
@@ -60,9 +60,9 @@ An <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"><
 &lt;br /&gt;
 
 
-As of today (2023-11-22):
-- **20065** packages are available on the [`CRAN`](https://cran.r-project.org)
-- **2266** packages on `Bioconductor`
+As of today (2024-12-03):
+- **21740** packages are available on the [`CRAN`](https://cran.r-project.org)
+- **2289** packages on `Bioconductor`
 
 ---
 
@@ -72,9 +72,9 @@ As of today (2023-11-22):
 &lt;br /&gt;
 
 .center[
-[![:scale 36%](img/r-pkg.jpg)](https://r-pkgs.org/)
-&amp;nbsp;
 [![:scale 34%](img/r-ext.png)](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
+&amp;nbsp;
+[![:scale 36%](img/r-pkg.jpg)](https://r-pkgs.org/)
 ]
 
 
@@ -137,14 +137,14 @@ As of today (2023-11-22):
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;A **package name**
 can only contain `letters`, `numbers`, and the `.`
 
-<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Check that the chosen name is not already in use with `available::available()`
+<i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;Check that the chosen name is not already in use with `available::available("nomdupackage")`
 
 --
 
 &lt;br /&gt;
 
 
-```r
+``` r
 ## Alternatively ----
 usethis::create_package("/absolute/path/to/the/package/name")
 ```
@@ -165,10 +165,10 @@ usethis::create_package("/absolute/path/to/the/package/name")
 ├── .Rbuildignore       # List of non-standard package files
 │
 ├── R/                  # Folder to store (only) R functions
-│   ├── myfun-1.R       # A first R function 
-│   └── myfun-2.R       # A second R function
+│   ├── myfun-1.R       # A first R function file
+│   └── myfun-2.R       # A second R function file
 │
-├── man/                # R functions documentation folder (automatically edited)
+├── man/                # Folder to store R functions documentation (automatically edited)
 │   ├── my_fun_1.Rd
 │   └── my_fun_2.Rd
 │
@@ -201,10 +201,10 @@ Let's create a first function `moyenne()`.
 
 &lt;br /&gt;
 
-- First, we will create a new <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> file in the folder **R/**.
+- First, we will create a new empty <i class="fab fa-r-project" role="presentation" aria-label="r-project icon"></i> file in the folder **R/**.
 
 
-```r
+``` r
 usethis::use_r("moyenne")
 ```
 
@@ -216,7 +216,7 @@ usethis::use_r("moyenne")
 - Now we can implement our function `moyenne()`.
 
 
-```r
+``` r
 moyenne &lt;- function(x) sum(x) / length(x)
 ```
 
@@ -256,7 +256,7 @@ Resources: [`Tidyverse style guide`](https://style.tidyverse.org/)
 Each `roxygen` header will always start with these two fields:
 
 
-```r
+``` r
 #' @title Short title of the function (one line)
 #'
 #' @description A longer description of what the function does (several lines)
@@ -268,7 +268,7 @@ Each `roxygen` header will always start with these two fields:
 Keywords `@title` and `@description` can be omitted.
 
 
-```r
+``` r
 #' Short title of the function (one line)
 #'
 #' A longer description of what the function does (several lines)
@@ -284,7 +284,7 @@ Keywords `@title` and `@description` can be omitted.
 If your function has `input parameters`, each one must be documented.
 
 
-```r
+``` r
 #' @param param_1 description
 #' @param param_2 description
 ```
@@ -294,7 +294,7 @@ If your function has `input parameters`, each one must be documented.
 In our function `moyenne()`:
 
 
-```r
+``` r
 #' @param x a numeric vector
 ```
 
@@ -307,7 +307,7 @@ If your function `returns` an <i class="fab fa-r-project" role="presentation" ar
 use the keyword `@return`.
 
 
-```r
+``` r
 #' @return What the function returns.
 ```
 
@@ -316,7 +316,7 @@ use the keyword `@return`.
 In our function `moyenne()`:
 
 
-```r
+``` r
 #' @return A `numeric` representing the arithmetic mean of `x`.
 ```
 
@@ -325,7 +325,7 @@ In our function `moyenne()`:
 If your function returns nothing, use the keyword `@return` as follow:
 
 
-```r
+``` r
 #' @return No return value.
 ```
 
@@ -338,48 +338,17 @@ If your function returns nothing, use the keyword `@return` as follow:
 Add a section `@examples` to show how to use your function:
 
 
-```r
+``` r
 #' @examples
 #' x &lt;- 1:10
 #' moyenne(x)
 ```
-
---
-
-&lt;br /&gt;
-
-If you don't want your example to be executed, use `\dontrun{}` when your example returns an error or does something that is dangerous
-
-
-```r
-#' @examples
-#' \dontrun{
-#' x &lt;- 1:10
-#' moyenne(x)
-#' }
-```
-
-or `\donttest{}` when your example takes too long (for the CRAN standards).
-
-
-```r
-#' @examples
-#' \donttest{
-#' moyenne(runif(10e7))
-#' }
-```
-
-
-
----
-
-## Time to document
 
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
-Finally if you want your function to be used directly by user you need to add this tag.
+Finally if you want your function to be used directly by user, you need to add this tag.
 
 
-```r
+``` r
 #' @export
 ```
 
@@ -388,10 +357,10 @@ Finally if you want your function to be used directly by user you need to add th
 
 ## Time to document
 
-Back to the R file of our function
+Back to the R file of our function.
 
 
-```r
+``` r
 #' Compute the arithmetic mean
 #'
 #' This function computes the arithmetic mean of a numeric variable.
@@ -414,6 +383,7 @@ moyenne &lt;- function(x) sum(x) / length(x)
 
 ## Generating the documentation
 
+.pull-lefttt[
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 It's time to generate the corresponding `.Rd` file from this `roxygen` header.
 
@@ -422,7 +392,7 @@ It's time to generate the corresponding `.Rd` file from this `roxygen` header.
 All `.Rd` files are stored in the `man` folder.
 
 
-```r
+``` r
 devtools::document()
 ```
 
@@ -430,7 +400,11 @@ devtools::document()
 ✓ Writing 'man/moyenne.Rd'
 ✓ Writing 'NAMESPACE'
 ```
+]
 
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
 
@@ -445,7 +419,7 @@ This file lists which functions need to be exported, i.e. directly
 usable when loading the package (this file also deals with external dependencies).
 
 
-```r
+``` r
 # Generated by roxygen2: do not edit by hand
 export(moyenne)
 ```
@@ -465,24 +439,27 @@ export(moyenne)
 
 ## Testing the function
 
-
+.pull-lefttt[
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Before going any further, we have to try our function. So we will load our package 
 (and **NOT** sourcing the function).
 
 
-```r
+``` r
 devtools::load_all()
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
 
-&lt;br /&gt;
 
 Now we can use our function:
 
 
-```r
+``` r
 moyenne(c(1, 2))
 ```
 
@@ -492,13 +469,11 @@ moyenne(c(1, 2))
 
 --
 
-&lt;br /&gt;
-
 What about `NA`?
 
 
 
-```r
+``` r
 moyenne(c(1, 2, NA))
 ```
 
@@ -507,6 +482,15 @@ moyenne(c(1, 2, NA))
 ```
 
 ***Hum...***
+
+
+---
+
+## Modifying the function
+
+&lt;br /&gt;
+
+![:scale 100.0%](img/pkg-step-5.png)
 
 
 ---
@@ -522,7 +506,7 @@ We need to update the code to deal with `NA` values.
 --
 
 
-```r
+``` r
 moyenne &lt;- function(x) {
   x &lt;- na.omit(x)
   sum(x) / length(x)
@@ -536,7 +520,7 @@ moyenne &lt;- function(x) {
 Let's test the function again:
 
 
-```r
+``` r
 ## Reload the function ----
 devtools::load_all()
 
@@ -574,7 +558,7 @@ computation can be done.
 
 
 
-```r
+``` r
 moyenne &lt;- function(x, na_rm = FALSE) {
   if (any(is.na(x))) {
     if (na_rm) {
@@ -594,7 +578,7 @@ moyenne &lt;- function(x, na_rm = FALSE) {
 Let's test the function again.
 
 
-```r
+``` r
 ## Reload the function ----
 devtools::load_all()
 
@@ -628,7 +612,7 @@ moyenne(x = c(1, 2, NA), na_rm = TRUE)
 ## Update documentation
 
 
-```r
+``` r
 #' Compute the arithmetic mean
 #'
 #' This function computes the arithmetic mean of a numeric variable.
@@ -660,7 +644,7 @@ moyenne &lt;- function(x, na_rm = FALSE) { ... }
 And update the corresponding `.Rd` file and the `NAMESPACE`.
 
 
-```r
+``` r
 devtools::document()
 ```
 
@@ -687,9 +671,9 @@ using the `DESCRIPTION` file:
 - who can use our package and how (licence)?
 - who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
 
+.pull-lefttt[
 
-
-```r
+``` r
 usethis::edit_file("DESCRIPTION")
 ```
 
@@ -710,6 +694,10 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-usethis.png)](https://usethis.r-lib.org/)]
+]
 
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Resources: [`DESCRIPTION file`](https://r-pkgs.org/description.html)
@@ -731,8 +719,9 @@ and [`Choose a license`](https://choosealicense.com)
 
 ## Check package
 
+.pull-lefttt[
 
-```r
+``` r
 devtools::check()
 ```
 
@@ -750,6 +739,14 @@ Duration: 11.6s
 
 0 errors ✓ | 0 warnings ✓ | 1 note x
 ```
+]
+.pull-righttt[
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 
 --
@@ -783,13 +780,13 @@ In `roxygen` header, import:
 
 - either the whole package, with the tag `@import`:
 
-```r
+``` r
 #' @import stats
 ```
 
 - or only specific functions from a package, with the tag `@importFrom`:
 
-```r
+``` r
 #' @importFrom stats na.omit
 ```
 
@@ -804,7 +801,7 @@ In your R code, call external functions with `::` for clarity and efficiency.&lt
 Here `stats::na.omit()`
 
 
-```r
+``` r
 moyenne &lt;- function(x, na_rm = FALSE) {
   if (any(is.na(x))) {
     if (na_rm) {
@@ -840,15 +837,16 @@ dependencies to this file.
 
 ## Package dependencies
 
+.pull-lefttt[
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Let's add the dependency `stats` in the `DESCRIPTION` file.
 
 
-```r
+``` r
 usethis::use_package("stats", type = "Imports")
 ```
 
-&lt;br /&gt;
+&lt;br/&gt;
 
 ```
 Package: mypkg
@@ -869,7 +867,10 @@ RoxygenNote: 7.1.2
 Imports:
     stats
 ```
-
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-usethis.png)](https://usethis.r-lib.org/)]
+]
 
 ---
 
@@ -917,7 +918,7 @@ Resources: Wickham &amp; Bryan - R Packages
 
 
 
-```r
+``` r
 devtools::check()
 ```
 
@@ -942,22 +943,24 @@ Duration: 11.6s
 
 ## Install package
 
+.pull-lefttt[
 
-
-```r
+``` r
 ## Install package ----
 devtools::install()
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
-
-&lt;br /&gt;
 
 <i class="far fa-hand-point-right" role="presentation" aria-label="hand-point-right icon"></i> &amp;nbsp;
 Now we can use our package.
 
 
-```r
+``` r
 ## Load and attach the package ----
 library("mypkg")
 
@@ -966,7 +969,7 @@ moyenne(c(1, 2))
 ```
 
 
-```r
+``` r
 ## Use the package (without attaching it) ----
 mypkg::moyenne(c(1, 2))
 ```
@@ -1004,7 +1007,7 @@ Package `{testthat}`
 
 
 
-```r
+``` r
 usethis::use_testthat()
 ```
 
@@ -1032,7 +1035,7 @@ Resources:
 
 
 
-```r
+``` r
 usethis::use_vignette("mypkg")
 ```
 
@@ -1053,7 +1056,7 @@ Resources:
 - Add a **Logo** with `hexSticker`
 - CI/CD with **GitHub Actions** - `usethis::use_github_action_*()`
 - Check your package with `rhub`
-- Add a **DOI** with Zenodo
+- Add a **DOI** with HAL or Zenodo
 - Add a **NEWS** file - `usethis::use_news_md()`
 
 &lt;br /&gt;

@@ -1,7 +1,7 @@
 ---
 title: "<br />Building an R package"
 subtitle: "<i>Become an R developer</i>"
-date: .inst[November 2023]
+date: .inst[December 2024]
 author: <br /><br /><br />Nicolas Casajus & Aurélie Siberchicot
 output:
   xaringan::moon_reader:
@@ -67,9 +67,9 @@ As of today (`r Sys.Date()`):
 <br />
 
 .center[
-[![:scale 36%](img/r-pkg.jpg)](https://r-pkgs.org/)
-&nbsp;
 [![:scale 34%](img/r-ext.png)](https://cran.r-project.org/doc/manuals/r-release/R-exts.html)
+&nbsp;
+[![:scale 36%](img/r-pkg.jpg)](https://r-pkgs.org/)
 ]
 
 
@@ -132,7 +132,7 @@ As of today (`r Sys.Date()`):
 `r fontawesome::fa_i("hand-point-right")` &nbsp;A **package name**
 can only contain `letters`, `numbers`, and the `.`
 
-`r fontawesome::fa_i("hand-point-right")` &nbsp;Check that the chosen name is not already in use with `available::available()`
+`r fontawesome::fa_i("hand-point-right")` &nbsp;Check that the chosen name is not already in use with `available::available("nomdupackage")`
 
 --
 
@@ -159,10 +159,10 @@ usethis::create_package("/absolute/path/to/the/package/name")
 ├── .Rbuildignore       # List of non-standard package files
 │
 ├── R/                  # Folder to store (only) R functions
-│   ├── myfun-1.R       # A first R function 
-│   └── myfun-2.R       # A second R function
+│   ├── myfun-1.R       # A first R function file
+│   └── myfun-2.R       # A second R function file
 │
-├── man/                # R functions documentation folder (automatically edited)
+├── man/                # Folder to store R functions documentation (automatically edited)
 │   ├── my_fun_1.Rd
 │   └── my_fun_2.Rd
 │
@@ -195,7 +195,7 @@ Let's create a first function `moyenne()`.
 
 <br />
 
-- First, we will create a new `r fontawesome::fa_i("r-project")` file in the folder **R/**.
+- First, we will create a new empty `r fontawesome::fa_i("r-project")` file in the folder **R/**.
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_r("moyenne")
@@ -328,37 +328,8 @@ Add a section `@examples` to show how to use your function:
 #' moyenne(x)
 ```
 
---
-
-<br />
-
-If you don't want your example to be executed, use `\dontrun{}` when your example returns an error or does something that is dangerous
-
-```{r, echo = TRUE, eval = FALSE}
-#' @examples
-#' \dontrun{
-#' x <- 1:10
-#' moyenne(x)
-#' }
-```
-
-or `\donttest{}` when your example takes too long (for the CRAN standards).
-
-```{r, echo = TRUE, eval = FALSE}
-#' @examples
-#' \donttest{
-#' moyenne(runif(10e7))
-#' }
-```
-
-
-
----
-
-## Time to document
-
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
-Finally if you want your function to be used directly by user you need to add this tag.
+Finally if you want your function to be used directly by user, you need to add this tag.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' @export
@@ -369,7 +340,7 @@ Finally if you want your function to be used directly by user you need to add th
 
 ## Time to document
 
-Back to the R file of our function
+Back to the R file of our function.
 
 ```{r, echo = TRUE, eval = FALSE}
 #' Compute the arithmetic mean
@@ -394,6 +365,7 @@ moyenne <- function(x) sum(x) / length(x)
 
 ## Generating the documentation
 
+.pull-lefttt[
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 It's time to generate the corresponding `.Rd` file from this `roxygen` header.
 
@@ -409,7 +381,11 @@ devtools::document()
 ✓ Writing 'man/moyenne.Rd'
 ✓ Writing 'NAMESPACE'
 ```
+]
 
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
 
@@ -443,7 +419,7 @@ export(moyenne)
 
 ## Testing the function
 
-
+.pull-lefttt[
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Before going any further, we have to try our function. So we will load our package 
 (and **NOT** sourcing the function).
@@ -451,10 +427,13 @@ Before going any further, we have to try our function. So we will load our packa
 ```{r, echo = TRUE, eval = FALSE}
 devtools::load_all()
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
 
-<br />
 
 Now we can use our function:
 
@@ -468,8 +447,6 @@ moyenne(c(1, 2))
 
 --
 
-<br />
-
 What about `NA`?
 
 
@@ -482,6 +459,15 @@ moyenne(c(1, 2, NA))
 ```
 
 ***Hum...***
+
+
+---
+
+## Modifying the function
+
+<br />
+
+![:scale 100.0%](img/pkg-step-5.png)
 
 
 ---
@@ -656,7 +642,7 @@ using the `DESCRIPTION` file:
 - who can use our package and how (licence)?
 - who should be contacted if there is a problem or question (the maintainer has the `cre` role)?
 
-
+.pull-lefttt[
 ```{r, echo = TRUE, eval = FALSE}
 usethis::edit_file("DESCRIPTION")
 ```
@@ -678,6 +664,10 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-usethis.png)](https://usethis.r-lib.org/)]
+]
 
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Resources: [`DESCRIPTION file`](https://r-pkgs.org/description.html)
@@ -699,6 +689,7 @@ and [`Choose a license`](https://choosealicense.com)
 
 ## Check package
 
+.pull-lefttt[
 ```{r, echo = TRUE, eval = FALSE}
 devtools::check()
 ```
@@ -717,6 +708,14 @@ Duration: 11.6s
 
 0 errors ✓ | 0 warnings ✓ | 1 note x
 ```
+]
+.pull-righttt[
+<br />
+<br />
+<br />
+<br />
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 
 --
@@ -804,6 +803,7 @@ dependencies to this file.
 
 ## Package dependencies
 
+.pull-lefttt[
 `r fontawesome::fa_i("hand-point-right")` &nbsp;
 Let's add the dependency `stats` in the `DESCRIPTION` file.
 
@@ -811,7 +811,7 @@ Let's add the dependency `stats` in the `DESCRIPTION` file.
 usethis::use_package("stats", type = "Imports")
 ```
 
-<br />
+<br/>
 
 ```
 Package: mypkg
@@ -832,7 +832,10 @@ RoxygenNote: 7.1.2
 Imports:
     stats
 ```
-
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-usethis.png)](https://usethis.r-lib.org/)]
+]
 
 ---
 
@@ -904,15 +907,17 @@ Duration: 11.6s
 
 ## Install package
 
-
+.pull-lefttt[
 ```{r, echo = TRUE, eval = FALSE}
 ## Install package ----
 devtools::install()
 ```
+]
+.pull-righttt[
+.center[[![:scale 75%](img/hex-devtools.png)](https://devtools.r-lib.org/)]
+]
 
 --
-
-<br />
 
 `r fontawesome::fa_i("hand-point-right", )` &nbsp;
 Now we can use our package.
@@ -1010,7 +1015,7 @@ Resources:
 - Add a **Logo** with `hexSticker`
 - CI/CD with **GitHub Actions** - `usethis::use_github_action_*()`
 - Check your package with `rhub`
-- Add a **DOI** with Zenodo
+- Add a **DOI** with HAL or Zenodo
 - Add a **NEWS** file - `usethis::use_news_md()`
 
 <br />
