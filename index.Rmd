@@ -1011,12 +1011,13 @@ Resources:
 
 - Deploy on **GitHub** - `usethis::use_github()`
 - Add a **README** (and badges) - `usethis::use_readme_rmd()`
+- Add a **NEWS** file - `usethis::use_news_md()`
 - Add a **Website** with `pkgdown`
 - Add a **Logo** with `hexSticker`
 - CI/CD with **GitHub Actions** - `usethis::use_github_action_*()`
 - Check your package with `rhub`
-- Add a **DOI** with HAL or Zenodo
-- Add a **NEWS** file - `usethis::use_news_md()`
+- ~~Add a **DOI** with HAL or Zenodo~~ CRAN yields a DOI for your package
+- Archive your package on [Software Heritage](https://www.softwareheritage.org/?lang=fr)
 
 <br />
 - Submit to CRAN
