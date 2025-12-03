@@ -1,7 +1,7 @@
 ---
 title: "<br />Building an R package"
 subtitle: "<i>Become an R developer</i>"
-date: .inst[December 2024]
+date: .inst[December 2025]
 author: <br /><br /><br />Nicolas Casajus & Aurélie Siberchicot
 output:
   xaringan::moon_reader:
